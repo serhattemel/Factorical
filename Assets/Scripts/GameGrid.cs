@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class GameGrid : MonoBehaviour
 {
-    private int _height = 10;
-    private int _width = 10;
-    private float _gridSpaceSize = 1.0f;
+    [SerializeField] private int _height = 27;
+    [SerializeField] private int _width = 10;
+    private float _gridSpaceSize = 1f;
 
-    public GameObject target;
-    Vector3 truePos;
+    
 
 
     [SerializeField] private GameObject _gridCellPrefab;
     private GameObject[,] _gameGrid;
-
-    private void LateUpdate()
+    public Vector2Int GetPosition()
     {
-        truePos.x = Mathf.Floor(target.transform.position.x / _gridSpaceSize) * _gridSpaceSize + 0.5f;
-        truePos.y = Mathf.Floor(target.transform.position.y / _gridSpaceSize) * _gridSpaceSize + 0.5f;
-        truePos.z = Mathf.Floor(target.transform.position.z / _gridSpaceSize) * _gridSpaceSize + 0.5f;
-
-        target.transform.position = truePos;
+        return new Vector2Int(_width,_height);
     }
+
     void Start()
     {
 
@@ -32,13 +27,13 @@ public class GameGrid : MonoBehaviour
 
     private void CreateGrid()
     {
-        _gameGrid = new GameObject[_height,_width];
+        _gameGrid = new GameObject[_width, _height];
         if(_gridCellPrefab == null)
         {
             Debug.LogError("ERROR: Grid Cell Prefab not assigned");
         }
 
-        for(int y = 0; y < _height; y++)
+        for(int y = 0; y <_height ; y++)
         {
             for(int x=0; x < _width; x++)
             {

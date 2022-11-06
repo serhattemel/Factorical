@@ -4,35 +4,30 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private Transform objectToPlace;
-    [SerializeField] private Camera gameCamera;
-    [SerializeField] private bool followPointer=false;
-    private GameGrid gameGrid;
+    private Buildings buildings;
     [SerializeField] private LayerMask whatIsAGridLayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameGrid = FindObjectOfType<GameGrid>();
+        buildings = GameObject.Find("Building").GetComponent<Buildings>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Ray ray = gameCamera.ScreenPointToRay(Input.mousePosition);
-        if (followPointer == true && Physics.Raycast(ray, out RaycastHit hitInfo))
-        {
-            objectToPlace.position = hitInfo.point;
-        }
 
         GridCell cellMouseIsOver = IsMouseOverAGridSpace();
-        if(cellMouseIsOver!=null)
+        bool a = cellMouseIsOver.GetComponent<GridCell>().GetOcc();
+
+        if (cellMouseIsOver!=null&&a==false)
         {
             if(Input.GetMouseButton(0))
             {
                 cellMouseIsOver.GetComponentInChildren<SpriteRenderer>().material.color = Color.red;
                 Debug.Log("Cell Pos:"+ cellMouseIsOver.GetPosition());
-                followPointer = false;
+                buildings.SetTrue();
+                cellMouseIsOver.GetComponent<GridCell>().SetOccTrue();
             }
         }
     }
