@@ -9,7 +9,7 @@ public class GridCell : MonoBehaviour
 
     public GameObject objectInThisGridSpace = null;
 
-    [SerializeField] public bool isOccupied = false;
+    [SerializeField] private bool isOccupied = false;
     public void SetOccTrue()
     {
         isOccupied = true;

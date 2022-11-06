@@ -12,7 +12,7 @@ public class Buildings : MonoBehaviour
     private GameObject object2;
     [SerializeField] private Transform objectToPlace;
     [SerializeField] private Camera gameCamera;
-    [SerializeField] private bool followPointer;
+    [SerializeField] private bool followPointer=true;
     void Start()
     {
     }
@@ -23,11 +23,12 @@ public class Buildings : MonoBehaviour
         object2.transform.SetParent(object1.transform);
         target = object2;
         objectToPlace = object2.transform;
-        followPointer=false;
+        followPointer=true;
+        object2.GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
     }
-    public void SetTrue()
+    public void SetFalse()
     {
-        followPointer = true;
+        followPointer = false;
 
     }
     private void LateUpdate()
@@ -42,9 +43,13 @@ public class Buildings : MonoBehaviour
     void Update()
     {
         Ray ray = gameCamera.ScreenPointToRay(Input.mousePosition);
-        if (followPointer == false && Physics.Raycast(ray, out RaycastHit hitInfo))
+        if (followPointer == true && Physics.Raycast(ray, out RaycastHit hitInfo))
         {
             objectToPlace.position = hitInfo.point;
+        }
+        if(object2 != null && followPointer == false)
+        {
+            object2.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
     }
 }

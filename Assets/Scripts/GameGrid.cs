@@ -7,11 +7,13 @@ public class GameGrid : MonoBehaviour
     [SerializeField] private int _height = 27;
     [SerializeField] private int _width = 10;
     private float _gridSpaceSize = 1f;
-
     
+    public GameObject Prefab1;
 
 
-    [SerializeField] private GameObject _gridCellPrefab;
+
+
+    //[SerializeField] private GameObject _gridCellPrefab;
     private GameObject[,] _gameGrid;
     public Vector2Int GetPosition()
     {
@@ -28,7 +30,7 @@ public class GameGrid : MonoBehaviour
     private void CreateGrid()
     {
         _gameGrid = new GameObject[_width, _height];
-        if(_gridCellPrefab == null)
+        if(Prefab1 == null)
         {
             Debug.LogError("ERROR: Grid Cell Prefab not assigned");
         }
@@ -37,12 +39,23 @@ public class GameGrid : MonoBehaviour
         {
             for(int x=0; x < _width; x++)
             {
-                _gameGrid[x, y] = Instantiate(_gridCellPrefab, new Vector3(x * _gridSpaceSize, y * _gridSpaceSize), Quaternion.identity);
+                Color color = CalculateColor(x, y);
+                _gameGrid[x, y] = Instantiate(Prefab1, new Vector3(x * _gridSpaceSize, y * _gridSpaceSize), Quaternion.identity);
                 _gameGrid[x, y].GetComponent<GridCell>().SetPosition(x, y);
                 _gameGrid[x, y].transform.parent = transform;
-                _gameGrid[x, y].gameObject.name = "Grid Space (X: " + x.ToString() + ", Y:" + y.ToString() + ")";
+                _gameGrid[x, y].gameObject.name = x.ToString()+","+y.ToString();
+                _gameGrid[x, y].gameObject.tag = "GridCell";
+                _gameGrid[x, y].GetComponentInChildren<SpriteRenderer>().color = color;
             }
         }
+    }
+    Color CalculateColor(int x, int y)
+    {
+        float xCoord = (float)x / _width;
+        float yCoord = (float)y / _height;
+
+        float sample = Mathf.PerlinNoise(xCoord, yCoord);
+        return new Color(sample, sample, sample);
     }
     public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
     {
