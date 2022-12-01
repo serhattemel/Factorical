@@ -4,28 +4,39 @@ using UnityEngine;
 
 public class CameraSettings : MonoBehaviour
 {
+    private Buildings buildings;
     [SerializeField] private Camera gameCamera;
     Vector2Int Vector2Int;
     private Vector3 touchStart;
     public float groundZ = 0;
-    // Start is called before the first frame update
+    [SerializeField] private bool scrolling=false;
+    public bool Scrolling
+    {
+        get { return scrolling; }
+        set { scrolling = value; }
+    }
     void Start()
     {
+        scrolling = false;
         Vector2Int = FindObjectOfType<GameGrid>().GetPosition();
         gameCamera.transform.position = new Vector3(Vector2Int.x / 2 - 0.5f, Vector2Int.y / 2 - 0.5f, -10);
+        buildings = GameObject.Find("Building").GetComponent<Buildings>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(0))
         {
-            touchStart = GetWorldPosition(groundZ);
-        }
-        if (Input.GetMouseButton(1))
-        {
-            Vector3 direction = touchStart - GetWorldPosition(groundZ);
-            Camera.main.transform.position += direction;
+            if (Input.GetMouseButtonDown(0))
+            {
+                touchStart = GetWorldPosition(groundZ);
+            }
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 direction = touchStart - GetWorldPosition(groundZ);
+                Camera.main.transform.position += direction;
+            }
         }
     }
 

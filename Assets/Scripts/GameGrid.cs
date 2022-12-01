@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class GameGrid : MonoBehaviour
 {
-    [SerializeField] private int _height = 27;
-    [SerializeField] private int _width = 10;
+    [SerializeField] private int _height;
+    [SerializeField] private int _width;
     private float _gridSpaceSize = 1f;
-    
+
+    public int Height
+    {
+        get { return _height; }
+        set { _height = value; }
+    }
+    public int Width
+    {
+        get { return _width; }
+        set { _width = value; }
+    }
     public GameObject Prefab1;
 
 

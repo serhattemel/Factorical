@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d552e09a06768d42a2bca2881427ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  object1: {fileID: 0}
-  object2_prefab: {fileID: 0}
-  objectToPlace: {fileID: 5799444866963393430}
-  gameCamera: {fileID: 8899190324280311491, guid: 05f1a3e1240285a4aa83e6baa7f3b489, type: 3}
+  target: {fileID: 5799444866963393429}
+  object1: {fileID: 5799444866963393429}
+  object2: {fileID: 3280938041226021882, guid: 921c79ed7e252204983d745a657fdcfc, type: 3}
+  objectToPlace: {fileID: 3280938041226021883, guid: 921c79ed7e252204983d745a657fdcfc, type: 3}
+  gameCamera: {fileID: 0}
   followPointer: 0
+  buildingMode: 0
+  _buildingCount: 0
