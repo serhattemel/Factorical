@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class Buildings : MonoBehaviour
 {
@@ -24,7 +19,7 @@ public class Buildings : MonoBehaviour
     [SerializeField] private bool followPointer=true;
     [SerializeField] public bool buildingMode=false;
     public int _buildingCount = 0;
-    void Awake()
+    void Start()
     {
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
         InstantiateObject();
@@ -36,7 +31,7 @@ public class Buildings : MonoBehaviour
         secondButton.gameObject.SetActive(false);
         thirdButton.gameObject.SetActive(false);
         buildingMode = true;
-        _buildingsList.Add(Instantiate(object2, new Vector3(0,0), Quaternion.identity));
+        _buildingsList.Add(Instantiate(object2, new Vector3(gameGrid.Width / 2, gameGrid.Height / 2, -0.5f), Quaternion.identity));
         _buildingsList[_buildingCount].name="factory " + _buildingCount;
         _buildingsList[_buildingCount].transform.SetParent(object1.transform);
         Target = _buildingsList[_buildingCount];

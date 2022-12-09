@@ -1,13 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameGrid : MonoBehaviour
 {
+    GridCell cell;
+    readonly List<GameObject> Resources = new List<GameObject>();
+    private int resourceCount = 0;
+    private Vector3 firstRangePositive, firstRangeNegative;
+    public float rangeX, rangeY;
+    [SerializeField] GameObject object1,object2,object3;
     [SerializeField] private int _height;
     [SerializeField] private int _width;
     private float _gridSpaceSize = 1f;
 
+    public List<GameObject> terrainList = new List<GameObject>();
     public int Height
     {
         get { return _height; }
@@ -20,27 +26,37 @@ public class GameGrid : MonoBehaviour
     }
     public GameObject Prefab1;
 
-
-
-
-    //[SerializeField] private GameObject _gridCellPrefab;
     private GameObject[,] _gameGrid;
+    public int x_offset= 0;
+    public int y_offset= 0;
+    public float magnification= 7f;
+    public float magnification2= 7f;
     public Vector2Int GetPosition()
     {
         return new Vector2Int(_width,_height);
     }
 
+    [System.Obsolete]
     void Start()
     {
-
+       
+        x_offset = Random.RandomRange(-_width,0);
+        y_offset = Random.RandomRange(-_height,0);
         CreateGrid();
-        
+        SetRange();
+        InstantiateTree();
     }
-
+    private void SetRange()
+    {
+        firstRangePositive.x = (_width / 2) + Mathf.FloorToInt(_width / 8) + 0.5f;
+        firstRangePositive.y = (_height / 2) + Mathf.FloorToInt(_height / 8) + 0.5f;
+        firstRangeNegative.x = (_width / 2) - Mathf.FloorToInt(_width / 8) + 0.5f;
+        firstRangeNegative.y = (_height / 2) - Mathf.FloorToInt(_height / 8 ) + 0.5f;
+    }
     private void CreateGrid()
     {
         _gameGrid = new GameObject[_width, _height];
-        if(Prefab1 == null)
+        if(terrainList[0] == null)
         {
             Debug.LogError("ERROR: Grid Cell Prefab not assigned");
         }
@@ -49,35 +65,99 @@ public class GameGrid : MonoBehaviour
         {
             for(int x=0; x < _width; x++)
             {
-                Color color = CalculateColor(x, y);
-                _gameGrid[x, y] = Instantiate(Prefab1, new Vector3(x * _gridSpaceSize, y * _gridSpaceSize), Quaternion.identity);
+                int terrainNumber = CalculateTerrain(x, y);
+                _gameGrid[x, y] = Instantiate(terrainList[terrainNumber], new Vector3(x * _gridSpaceSize, y * _gridSpaceSize), Quaternion.identity);
                 _gameGrid[x, y].GetComponent<GridCell>().SetPosition(x, y);
                 _gameGrid[x, y].transform.parent = transform;
                 _gameGrid[x, y].gameObject.name = x.ToString()+","+y.ToString();
                 _gameGrid[x, y].gameObject.tag = "GridCell";
-                _gameGrid[x, y].GetComponentInChildren<SpriteRenderer>().color = color;
             }
         }
     }
-    Color CalculateColor(int x, int y)
+    int CalculateTerrain(int x, int y)
     {
-        float xCoord = (float)x / _width;
-        float yCoord = (float)y / _height;
+        float raw_perlin = Mathf.PerlinNoise(
+            (x-x_offset)/magnification,
+            (y-y_offset)/magnification
+            );
 
-        float sample = Mathf.PerlinNoise(xCoord, yCoord);
-        return new Color(sample, sample, sample);
+        float  clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
+        float scaled_perlin = clamp_perlin * (terrainList.Count);
+        if (scaled_perlin == terrainList.Count)
+        {
+            scaled_perlin = terrainList.Count-1;
+        }
+
+        
+        return Mathf.FloorToInt(scaled_perlin);
     }
-    public Vector2Int GetGridPosFromWorld(Vector3 worldPosition)
+    int CalculateResource(int x, int y)
     {
-        int x = Mathf.FloorToInt(worldPosition.x / _gridSpaceSize);
-        int y = Mathf.FloorToInt(worldPosition.z / _gridSpaceSize);
+        float raw_perlin = Mathf.PerlinNoise(
+            (x-x_offset)/magnification2,
+            (y-y_offset)/magnification2
+            );
 
-        x = Mathf.Clamp(x, 0, _width);
-        y = Mathf.Clamp(x,0,_height);
-
-        return new Vector2Int(x, y);
+        float  clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
+        float scaled_perlin = clamp_perlin * (15);
+        if (scaled_perlin == 15)
+        {
+            scaled_perlin = 14;
+        }
+        return Mathf.FloorToInt(scaled_perlin);
     }
+    private void InstantiateTree()
+    {
+        rangeX = firstRangePositive.x - firstRangeNegative.x;
+        rangeY = firstRangePositive.y - firstRangeNegative.y;
+        for (int y = 0; y < rangeY; y++)
+        {
+            for (int x = 0; x < rangeX; x++)
+            {
+                
+                cell = GameObject.Find((firstRangeNegative.x + x-0.5f) + "," + (firstRangeNegative.y + y-0.5f)).GetComponent<GridCell>();
+                if (cell.objectInThisGridSpace == null) 
+                {
+                    int tree = CalculateResource(x, y);
+                    switch (tree)
+                    {
+                        case > 11 :
+                            Resources.Add(Instantiate(object3, new Vector3((firstRangeNegative.x + x), (firstRangeNegative.y + y), -0.5f), Quaternion.identity));
+                            Resources[resourceCount].name = "ore " + resourceCount;
+                            Resources[resourceCount].transform.SetParent(object2.transform);
+                            cell.objectInThisGridSpace = Resources[resourceCount];
+                            resourceCount++;
+                            break;
+                        case > 3:
+                            break;
+                        case < 3:
+                            Resources.Add(Instantiate(object1, new Vector3((firstRangeNegative.x + x), (firstRangeNegative.y + y), -0.5f), Quaternion.identity));
+                            Resources[resourceCount].name = "tree " + resourceCount;
+                            Resources[resourceCount].transform.SetParent(object2.transform);
+                            cell.objectInThisGridSpace = Resources[resourceCount];
+                            resourceCount++;
+                            break;
+                        
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        for (int y = 0; y < rangeY; y++)
+        {
+            for (int x = 0; x < rangeX; x++)
+            {
 
+                cell = GameObject.Find((firstRangeNegative.x + x - 0.5f) + "," + (firstRangeNegative.y + y - 0.5f)).GetComponent<GridCell>();
+                if (cell.objectInThisGridSpace == null)
+                {
+                    int tree = CalculateResource(x, y);
+                   
+                }
+            }
+        }
+    }
     public Vector3 GetWorldPosFromGridPos(Vector2Int gridPos)
     {
         float x = gridPos.x * _gridSpaceSize;

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    public Text terrainText;
     private Buildings buildings;
     private CameraSettings moving;
     public Button secondButton;
@@ -56,8 +56,6 @@ public class InputManager : MonoBehaviour
         }
         
         
-        
-        
     }
     IEnumerator ExampleCoroutine()
     {
@@ -71,7 +69,9 @@ public class InputManager : MonoBehaviour
         {
             Vector2 pos = cellMouseIsOver.GetPosition();
             _gridCell = GameObject.Find(pos.x + "," + pos.y).GetComponent<GridCell>();
-            if (_gridCell.objectInThisGridSpace == null && moving.Scrolling==false)
+            string terrainName = _gridCell.transform.GetChild(0).name;
+            terrainText.text = terrainName;
+            if (_gridCell.objectInThisGridSpace == null && moving.Scrolling==false&&terrainName!="ice")
             {
                 Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
                 StartCoroutine(ExampleCoroutine());
