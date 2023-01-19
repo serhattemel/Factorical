@@ -35,7 +35,6 @@ public class Buildings : MonoBehaviour
     IEnumerator WaitInstantiateObject(int factory)
     {
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("deneme");
         firstButton.gameObject.SetActive(false);
         secondButton.gameObject.SetActive(false);
         thirdButton.gameObject.SetActive(false);
