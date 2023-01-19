@@ -1,10 +1,9 @@
-
+﻿
 using System.Collections;
 using UnityEngine;
 
 public class CameraSettings : MonoBehaviour
 {
-    private Buildings buildings;
     [SerializeField] private Camera gameCamera;
     Vector2Int Vector2Int;
     private Vector3 touchStart;
@@ -24,7 +23,6 @@ public class CameraSettings : MonoBehaviour
         scrolling = false;
         Vector2Int = FindObjectOfType<GameGrid>().GetPosition();
         gameCamera.transform.position = new Vector3(Vector2Int.x / 2 - 0.5f, Vector2Int.y / 2 - 10.5f, cameraZoom);
-        buildings = GameObject.Find("Building").GetComponent<Buildings>();
     }
 
 
@@ -59,8 +57,6 @@ public class CameraSettings : MonoBehaviour
                 Camera.main.transform.position += direction;
             }
         }
-        
-        Zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
     IEnumerator WaitForSec()
     {

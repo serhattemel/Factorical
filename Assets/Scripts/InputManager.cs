@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     private CameraSettings moving;
     public Button secondButton;
     public Button thirdButton;
+    public Button rotationButton;
     private Factory_1 _factory;
     private GridCell _gridCell, cellMouseIsOver;
     public Text a;
@@ -62,6 +63,7 @@ public class InputManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         buildings.fallowPointer = false;
         buildings.firstButton.gameObject.SetActive(true);
+        rotationButton.gameObject.SetActive(false);
     }
     private void ClickOnGrid()
     {
@@ -128,6 +130,17 @@ public class InputManager : MonoBehaviour
             _factory.Upgrade();
             if (_factory.upgradeLevel == 3)
                 thirdButton.gameObject.SetActive(false);
+        }
+        else
+            Debug.Log("Fabrika seçin");
+    }
+    public void RotateSelectedBuilding()
+    {
+        string factoryname = "factory " + buildings._buildingCount;
+        _factory = GameObject.Find(factoryname).GetComponent<Factory_1>();
+        if (_factory)
+        {
+            _factory.RotateByDegrees();
         }
         else
             Debug.Log("Fabrika seçin");

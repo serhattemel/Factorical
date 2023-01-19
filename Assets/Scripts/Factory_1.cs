@@ -43,6 +43,12 @@ public class Factory_1 : MonoBehaviour
         
         
     }
+    public void RotateByDegrees()
+    {
+        Vector3 rotationToAdd = new Vector3(0, 0, 90);
+        transform.Rotate(rotationToAdd);
+
+    }
     public void BluePrintOff()
     {
         GetComponentInChildren<MeshRenderer>().material.color = Color.white;
