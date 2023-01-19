@@ -11,7 +11,7 @@ public class GridCell : MonoBehaviour
 
     public void SetPosition(int x, int y)
     {
-        Debug.Log("");
+        Debug.Log("SetPosition");
         posX = x;
         posY = y;
     }
