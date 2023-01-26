@@ -53,8 +53,11 @@ public class CameraSettings : MonoBehaviour
             }
             if (Input.GetMouseButton(0))
             {
-                Vector3 direction = touchStart - GetWorldPosition(groundZ);
-                Camera.main.transform.position += direction;
+                    Vector3 direction = touchStart - GetWorldPosition(groundZ);
+                    Camera.main.transform.position += direction;
+                    Camera.main.transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, 20, 180), Mathf.Clamp(Camera.main.transform.position.y, 10, 170), Camera.main.transform.position.z);
+                
+                
             }
         }
     }

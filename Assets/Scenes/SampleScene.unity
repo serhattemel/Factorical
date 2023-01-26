@@ -1449,8 +1449,8 @@ MonoBehaviour:
   seed: 
   useRandomSeed: 1
   randomFillPercent: 41
-  _height: 250
-  _width: 250
+  _height: 200
+  _width: 200
   terrainList:
   - {fileID: 3413831752799965699, guid: 129e3efffe246fa4c9bef1a56e3b7b6c, type: 3}
   - {fileID: 5858444223942922004, guid: c16c2b4ee4e3e76468ad622f546255ac, type: 3}
