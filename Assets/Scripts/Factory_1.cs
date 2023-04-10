@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.VFX;
 
 public class Factory_1 : MonoBehaviour
 {
     private Buildings buildings;
+    public ParticleSystem buildEffect;
     public int upgradeLevel;
     public int maxUpgradeLevel;
     // Start is called before the first frame update
@@ -45,13 +47,14 @@ public class Factory_1 : MonoBehaviour
     }
     public void RotateByDegrees()
     {
-        Vector3 rotationToAdd = new Vector3(0, 0, 90);
+        Vector3 rotationToAdd = new Vector3(0,0, 90f);
         transform.Rotate(rotationToAdd);
 
     }
     public void BluePrintOff()
     {
         GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+        buildEffect.Play();
     }
     // Update is called once per frame
     void Update()

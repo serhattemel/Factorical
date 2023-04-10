@@ -128,7 +128,7 @@ public class GameGrid : MonoBehaviour
                 for (int y = 0; y < _height; y++)
                 {
                     float angle;
-                    switch (Random.Range(0, 5))
+                    switch (Random.Range(0, 1))
                     {
                         case 1:
                             angle = 0f;

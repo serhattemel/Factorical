@@ -1,0 +1,16 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl custom1
+Kd 1 1 1
+map_Kd Textures/custom1.png
+
+newmtl _defaultMat
+Kd 0.841 0.069 0.069
+
+newmtl dark
+Kd 0.224 0.235 0.275
+
+newmtl custom3
+Kd 0 0 0
+map_Kd Textures/custom3.png
+
