@@ -50,50 +50,50 @@ public class OreGenerator : MonoBehaviour
         }
         return Mathf.FloorToInt(scaled_perlin);
     }
-    private void InstantiateTree()
-    {
-        firstRangeX = firstRangePositive.x - firstRangeNegative.x;
-        firstRangeY = firstRangePositive.y - firstRangeNegative.y;
+    //private void InstantiateTree()
+    //{
+    //    firstRangeX = firstRangePositive.x - firstRangeNegative.x;
+    //    firstRangeY = firstRangePositive.y - firstRangeNegative.y;
 
 
-        for (int y = 0; y < firstRangeY; y++)
-        {
-            for (int x = 0; x < firstRangeX; x++)
-            {
-                cell = GameObject.Find((firstRangeNegative.x + x - 0.5f) + "," + (firstRangeNegative.y + y - 0.5f)).GetComponent<GridCell>();
-                int tree = CalculateResource(x, y);
-                if (cell.objectInThisGridSpace == null&& cell.transform.GetChild(0).name!= "sand")
-                {
-                    switch (tree)
-                    {
-                        case > 11:
-                            Resources.Add(Instantiate(ore_blue, new Vector3((firstRangeNegative.x + x), (firstRangeNegative.y + y), -0.15f), Quaternion.identity));
-                            Resources[resourceCount].name = "ore " + resourceCount;
-                            Resources[resourceCount].transform.SetParent(object2.transform);
-                            cell.objectInThisGridSpace = Resources[resourceCount];
-                            Resources[resourceCount].gameObject.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Resources[resourceCount].gameObject.transform.position.y, Resources[resourceCount].gameObject.transform.position.z);
-                            resourceCount++;
-                            break;
-                        case > 3:
-                            break;
-                        case < 3:
-                            Resources.Add(Instantiate(treePrefab, new Vector3((firstRangeNegative.x + x), (firstRangeNegative.y + y), -0.5f), Quaternion.identity));
-                            Resources[resourceCount].name = "tree " + resourceCount;
-                            Resources[resourceCount].transform.SetParent(object2.transform);
-                            cell.objectInThisGridSpace = Resources[resourceCount];
-                            resourceCount++;
-                            break;
+    //    for (int y = 0; y < firstRangeY; y++)
+    //    {
+    //        for (int x = 0; x < firstRangeX; x++)
+    //        {
+    //            cell = GameObject.Find((firstRangeNegative.x + x - 0.5f) + "," + (firstRangeNegative.y + y - 0.5f)).GetComponent<GridCell>();
+    //            int tree = CalculateResource(x, y);
+    //            if (cell.objectInThisGridSpace == null&& cell.transform.GetChild(0).name!= "sand")
+    //            {
+    //                switch (tree)
+    //                {
+    //                    case > 11:
+    //                        Resources.Add(Instantiate(ore_blue, new Vector3((firstRangeNegative.x + x), (firstRangeNegative.y + y), -0.15f), Quaternion.identity));
+    //                        Resources[resourceCount].name = "ore " + resourceCount;
+    //                        Resources[resourceCount].transform.SetParent(object2.transform);
+    //                        cell.objectInThisGridSpace = Resources[resourceCount];
+    //                        Resources[resourceCount].gameObject.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Resources[resourceCount].gameObject.transform.position.y, Resources[resourceCount].gameObject.transform.position.z);
+    //                        resourceCount++;
+    //                        break;
+    //                    case > 3:
+    //                        break;
+    //                    case < 3:
+    //                        Resources.Add(Instantiate(treePrefab, new Vector3((firstRangeNegative.x + x), (firstRangeNegative.y + y), -0.5f), Quaternion.identity));
+    //                        Resources[resourceCount].name = "tree " + resourceCount;
+    //                        Resources[resourceCount].transform.SetParent(object2.transform);
+    //                        cell.objectInThisGridSpace = Resources[resourceCount];
+    //                        resourceCount++;
+    //                        break;
 
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
+    //                    default:
+    //                        break;
+    //                }
+    //            }
+    //        }
+    //    }
 
         
         
-    }
+    //}
     private void InstantiateResource()
     {
         for (int y = 0; y < _height; y++)
@@ -110,7 +110,7 @@ public class OreGenerator : MonoBehaviour
                         {
                             case > 15:
                                 Resources.Add(Instantiate(ore_blue, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.Euler(0, 0, Random.Range(0, 360))));
-                                Resources[resourceCount].name = "ore " + resourceCount;
+                                Resources[resourceCount].name = "blue ore";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
                                 cell.objectInThisGridSpace = Resources[resourceCount];
                                 //Resources[resourceCount].gameObject.transform.rotation = Quaternion.Euler(Resources[resourceCount].gameObject.transform.position.x, Resources[resourceCount].gameObject.transform.position.y, Random.Range(0, 360));
@@ -138,7 +138,7 @@ public class OreGenerator : MonoBehaviour
                         {
                             case > 15:
                                 Resources.Add(Instantiate(ore_red, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.Euler(0, 0, Random.Range(0, 360))));
-                                Resources[resourceCount].name = "ore " + resourceCount;
+                                Resources[resourceCount].name = "red ore";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
                                 cell.objectInThisGridSpace = Resources[resourceCount];
                                 //Resources[resourceCount].gameObject.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Resources[resourceCount].gameObject.transform.position.y, Resources[resourceCount].gameObject.transform.position.z);

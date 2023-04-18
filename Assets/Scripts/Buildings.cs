@@ -73,18 +73,6 @@ public class Buildings : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            InstantiateObject(4);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            InstantiateObject(5);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            InstantiateObject(6);
-        }
 
         if (buildingMode == true)
         {
@@ -92,7 +80,7 @@ public class Buildings : MonoBehaviour
             {
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().BluePrintOff();
                 _buildingsList[_buildingCount].gameObject.transform.position = new Vector3(_buildingsList[_buildingCount].gameObject.transform.position.x, _buildingsList[_buildingCount].gameObject.transform.position.y, -0.5f);
-                _gridCell.objectInThisGridSpace = _buildingsList[_buildingCount] as GameObject;
+                _gridCell.objectInThisGridSpace = _buildingsList[_buildingCount] as GameObject; 
                 _buildingCount++;
                 buildingMode = false;
             }

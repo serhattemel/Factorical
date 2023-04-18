@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
-    public Text terrainText;
     private Buildings buildings;
     private CameraSettings moving;
     public Button secondButton;
     public Button thirdButton;
     public Button rotationButton;
     private Factory_1 _factory;
+    private Belt _belt;
     private GridCell _gridCell, cellMouseIsOver;
-    public Text a;
+    public Text factoryName,factoryLevel;
     private float startTime, endTime,totalTime;
     [SerializeField] private LayerMask whatIsAGridLayer;
     List<RaycastResult> results;
@@ -47,7 +47,6 @@ public class InputManager : MonoBehaviour
                     moving.Scrolling = false;
                     if (cellMouseIsOver != null)
                     {
-                        Debug.Log("kisa");
                         ClickOnGrid();
                     }
                     return;
@@ -72,8 +71,7 @@ public class InputManager : MonoBehaviour
             Vector2 pos = cellMouseIsOver.GetPosition();
             _gridCell = GameObject.Find(pos.x + "," + pos.y).GetComponent<GridCell>();
             string terrainName = _gridCell.transform.GetChild(0).name;
-            terrainText.text = terrainName;
-            if (_gridCell.objectInThisGridSpace == null && moving.Scrolling==false&&terrainName!="ice")
+            if (/*_gridCell.objectInThisGridSpace == null && */moving.Scrolling==false&&terrainName!="ice")
             {
                 Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
                 StartCoroutine(ExampleCoroutine());
@@ -85,15 +83,13 @@ public class InputManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitinfo, 100f))
             {
-                if (hitinfo.collider.tag == "Factory")
+                if (hitinfo.collider.tag == "Factory" || hitinfo.collider.tag == "Belt")
                 {
                     secondButton.gameObject.SetActive(true);
+                    thirdButton.gameObject.SetActive(true);
                     _factory = hitinfo.transform.GetComponent<Factory_1>();
-                    a.text = _factory.name;
-                    if (_factory.upgradeLevel < _factory.maxUpgradeLevel)
-                        thirdButton.gameObject.SetActive(true);
-                    else
-                        thirdButton.gameObject.SetActive(false);
+                    factoryName.text = _factory.name;
+                    factoryLevel.text = _factory.upgradeLevel.ToString();
 
                 }
                 else
@@ -128,8 +124,10 @@ public class InputManager : MonoBehaviour
         if (_factory)
         {
             _factory.Upgrade();
-            if (_factory.upgradeLevel == 3)
-                thirdButton.gameObject.SetActive(false);
+            factoryName.text = _factory.name;
+            factoryLevel.text = _factory.upgradeLevel.ToString();
+            //if (_factory.upgradeLevel == 3)
+            //    thirdButton.gameObject.SetActive(false);
         }
         else
             Debug.Log("Fabrika seçin");

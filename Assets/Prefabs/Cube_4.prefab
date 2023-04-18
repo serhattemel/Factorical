@@ -115,6 +115,8 @@ MonoBehaviour:
   buildEffect: {fileID: 7539231826881521653}
   upgradeLevel: 0
   maxUpgradeLevel: 0
+  Rotation: 0
+  levelText: 
 --- !u!1001 &3813135018389669985
 PrefabInstance:
   m_ObjectHideFlags: 0
