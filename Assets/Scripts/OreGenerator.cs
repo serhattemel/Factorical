@@ -102,7 +102,7 @@ public class OreGenerator : MonoBehaviour
             {
                 cell = GameObject.Find((x) + "," + (y)).GetComponent<GridCell>();
                 int tree = CalculateResource(x, y);
-                if (cell.objectInThisGridSpace == null && cell.transform.GetChild(0).name != "sand")
+                if (cell.ObjectInThisGridSpace == null && cell.transform.GetChild(0).name != "sand")
                 {
                     if (x > firstRangeNegative.x && x < firstRangePositive.x && y > firstRangeNegative.y && y < firstRangePositive.y)
                     {
@@ -112,9 +112,13 @@ public class OreGenerator : MonoBehaviour
                                 Resources.Add(Instantiate(ore_blue, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.Euler(0, 0, Random.Range(0, 360))));
                                 Resources[resourceCount].name = "blue ore";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
-                                cell.objectInThisGridSpace = Resources[resourceCount];
+                                cell.ObjectInThisGridSpace = Resources[resourceCount];
                                 //Resources[resourceCount].gameObject.transform.rotation = Quaternion.Euler(Resources[resourceCount].gameObject.transform.position.x, Resources[resourceCount].gameObject.transform.position.y, Random.Range(0, 360));
                                 resourceCount++;
+                                if (Random.Range(1, 11) < 10)
+                                {
+                                    x++;
+                                }
                                 break;
                                 
                             case > 3:
@@ -124,8 +128,12 @@ public class OreGenerator : MonoBehaviour
                                 Resources.Add(Instantiate(treePrefab, new Vector3((x+0.5f), (y + 0.5f), -0.5f), Quaternion.identity));
                                 Resources[resourceCount].name = "tree " + resourceCount;
                                 Resources[resourceCount].transform.SetParent(object2.transform);
-                                cell.objectInThisGridSpace = Resources[resourceCount];
+                                cell.ObjectInThisGridSpace = Resources[resourceCount];
                                 resourceCount++;
+                                if (Random.Range(1, 11) < 10)
+                                {
+                                    x++;
+                                }
                                 break;
 
                             default:
@@ -140,9 +148,13 @@ public class OreGenerator : MonoBehaviour
                                 Resources.Add(Instantiate(ore_red, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.Euler(0, 0, Random.Range(0, 360))));
                                 Resources[resourceCount].name = "red ore";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
-                                cell.objectInThisGridSpace = Resources[resourceCount];
+                                cell.ObjectInThisGridSpace = Resources[resourceCount];
                                 //Resources[resourceCount].gameObject.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Resources[resourceCount].gameObject.transform.position.y, Resources[resourceCount].gameObject.transform.position.z);
                                 resourceCount++;
+                                if (Random.Range(1, 11) < 10)
+                                {
+                                    x++;
+                                }
                                 break;
                                 
                             case > 2:
@@ -151,8 +163,12 @@ public class OreGenerator : MonoBehaviour
                                 Resources.Add(Instantiate(treePrefab, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.identity));
                                 Resources[resourceCount].name = "tree " + resourceCount;
                                 Resources[resourceCount].transform.SetParent(object2.transform);
-                                cell.objectInThisGridSpace = Resources[resourceCount];
+                                cell.ObjectInThisGridSpace = Resources[resourceCount];
                                 resourceCount++;
+                                if (Random.Range(1, 11) < 10)
+                                {
+                                    x++;
+                                }
                                 break;
 
                             default:

@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     private CameraSettings moving;
     public Button secondButton;
     public Button thirdButton;
-    public Button rotationButton;
+    public Button rotationButton, roadButton;
     private Factory_1 _factory;
     private Belt _belt;
     private GridCell _gridCell, cellMouseIsOver;
@@ -57,50 +57,73 @@ public class InputManager : MonoBehaviour
         
         
     }
-    IEnumerator ExampleCoroutine()
+    IEnumerator PlacingCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
         buildings.fallowPointer = false;
         buildings.firstButton.gameObject.SetActive(true);
+        roadButton.gameObject.SetActive(true);
         rotationButton.gameObject.SetActive(false);
     }
     private void ClickOnGrid()
     {
-        if (buildings.buildingMode == true&& results.Count==0)
+       if (moving.Scrolling == false)
         {
-            Vector2 pos = cellMouseIsOver.GetPosition();
-            _gridCell = GameObject.Find(pos.x + "," + pos.y).GetComponent<GridCell>();
-            string terrainName = _gridCell.transform.GetChild(0).name;
-            if (/*_gridCell.objectInThisGridSpace == null && */moving.Scrolling==false&&terrainName!="ice")
+            if (buildings.buildingMode == true && results.Count == 0)
             {
-                Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
-                StartCoroutine(ExampleCoroutine());
-
+                PlacingObject();
             }
-        }
-        else if(buildings.buildingMode == false)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitinfo, 100f))
+            else if (buildings.buildingMode == false)
             {
-                if (hitinfo.collider.tag == "Factory" || hitinfo.collider.tag == "Belt")
-                {
-                    secondButton.gameObject.SetActive(true);
-                    thirdButton.gameObject.SetActive(true);
-                    _factory = hitinfo.transform.GetComponent<Factory_1>();
-                    factoryName.text = _factory.name;
-                    factoryLevel.text = _factory.upgradeLevel.ToString();
-
-                }
-                else
-                {
-                    secondButton.gameObject.SetActive(false);
-                    thirdButton.gameObject.SetActive(false);
-                }
+                OnClickObject();
             }
+
         }
 
     }
+
+    private void PlacingObject()
+    {
+        Vector2 pos = cellMouseIsOver.GetPosition();
+        _gridCell = GameObject.Find(pos.x + "," + pos.y).GetComponent<GridCell>();
+        string terrainName = _gridCell.transform.GetChild(0).name;
+        string factoryname = buildings._buildingsList[buildings._buildingCount].name;
+        _factory = GameObject.Find(factoryname).GetComponent<Factory_1>();
+        if (_factory.FactoryType == "Extractor")
+        {
+            Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
+            StartCoroutine(PlacingCoroutine());
+        }
+        else if(_gridCell.ObjectInThisGridSpace == null /*&& terrainName != "ice"*/)
+        {
+            Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
+            StartCoroutine(PlacingCoroutine());
+
+        }
+    }
+
+    private void OnClickObject()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitinfo, 100f))
+        {
+            if (hitinfo.collider.tag != "Factory" && hitinfo.collider.tag != "Belt")
+            {
+                secondButton.gameObject.SetActive(false);
+                thirdButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                secondButton.gameObject.SetActive(true);
+                thirdButton.gameObject.SetActive(true);
+                _factory = hitinfo.transform.GetComponent<Factory_1>();
+                factoryName.text = _factory.FactoryType;
+                factoryLevel.text = _factory.upgradeLevel.ToString();
+
+            }
+        }
+    }
+
     public void DestroySelectedBuilding()
     {
         if (_factory)
@@ -124,7 +147,7 @@ public class InputManager : MonoBehaviour
         if (_factory)
         {
             _factory.Upgrade();
-            factoryName.text = _factory.name;
+            factoryName.text = _factory.FactoryType;
             factoryLevel.text = _factory.upgradeLevel.ToString();
             //if (_factory.upgradeLevel == 3)
             //    thirdButton.gameObject.SetActive(false);
@@ -134,7 +157,7 @@ public class InputManager : MonoBehaviour
     }
     public void RotateSelectedBuilding()
     {
-        string factoryname = "factory " + buildings._buildingCount;
+        string factoryname = buildings._buildingsList[buildings._buildingCount].name;
         _factory = GameObject.Find(factoryname).GetComponent<Factory_1>();
         if (_factory)
         {

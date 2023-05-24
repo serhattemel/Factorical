@@ -15,7 +15,7 @@ public class Buildings : MonoBehaviour
     Vector3 truePos;
     private float _gridSpaceSize = 1.0f;
     [SerializeField] GameObject object1, object2;
-    readonly List<GameObject> _buildingsList = new List<GameObject>();
+    public readonly List<GameObject> _buildingsList = new List<GameObject>();
     [SerializeField] List<GameObject> factoryList = new List<GameObject>();
     public Transform objectToPlace { get; set; }
     [SerializeField] private Camera gameCamera;
@@ -45,10 +45,32 @@ public class Buildings : MonoBehaviour
         Target = _buildingsList[_buildingCount];
         objectToPlace = _buildingsList[_buildingCount].transform;
         followPointer = true;
+        SetFactoryType(factory);
         buildingMenu.SetActive(false);
 
     }
 
+    private void SetFactoryType(int factory)
+    {
+        switch (factory)
+        {
+            case 0:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "OreFactory";
+                break;
+            case 1:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "WoodFactory";
+                break;
+            case 2:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Extractor";
+                break;
+            case 3:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Belt";
+                break;
+            default:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Default";
+                break;
+        }
+    }
     public void InstantiateObject(int factory)
     {
         StartCoroutine(WaitInstantiateObject(factory));
@@ -80,7 +102,12 @@ public class Buildings : MonoBehaviour
             {
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().BluePrintOff();
                 _buildingsList[_buildingCount].gameObject.transform.position = new Vector3(_buildingsList[_buildingCount].gameObject.transform.position.x, _buildingsList[_buildingCount].gameObject.transform.position.y, -0.5f);
-                _gridCell.objectInThisGridSpace = _buildingsList[_buildingCount] as GameObject; 
+                if (_gridCell.ObjectInThisGridSpace != null)
+                {
+                    _gridCell.OreInThisGridSpace = _gridCell.ObjectInThisGridSpace;
+                }
+                _gridCell.ObjectInThisGridSpace = _buildingsList[_buildingCount] as GameObject;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FindGridCell();
                 _buildingCount++;
                 buildingMode = false;
             }
