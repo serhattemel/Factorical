@@ -39,11 +39,11 @@ public class Mining : MonoBehaviour
     {
         MiningList.Add(Instantiate(proccesedOreList[_oreId], new Vector3(belt.transform.position.x, belt.transform.position.y, -1f), Quaternion.identity) as GameObject);
         //MiningList[_oreID].name = $"Ore: {_oreID}";
-        if (_oreId == 0)
+        if (_oreId == 2)
             MiningList[oreID].name = "Proccesed Tree";
-        else if (_oreId == 1)
+        else if (_oreId == 0)
             MiningList[oreID].name = "Proccesed Blue Ore";
-        else if (_oreId == 2)
+        else if (_oreId == 1)
             MiningList[oreID].name = "Proccesed Red Ore";
 
         MiningList[oreID].transform.parent = parentOre.transform;

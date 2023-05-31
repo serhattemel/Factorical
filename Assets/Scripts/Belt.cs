@@ -25,6 +25,7 @@ public class Belt : MonoBehaviour
         beltInSequence = FindNextBelt();
         gameObject.name = $"Belt: {_beltID++}";
         ShakeForBug();
+        this.GetComponent<Factory_1>().FactoryPrice = 2f;
     }
     private void ShakeForBug()
     {
@@ -38,7 +39,6 @@ public class Belt : MonoBehaviour
             beltInSequence = FindNextBelt();
             if (beltInSequence == null)
             {
-                print("fabrika aranıyor");
                 factoryInSequence = FindFactory();
             }
         }
@@ -104,13 +104,21 @@ public class Belt : MonoBehaviour
                 {
                     if (_Collider.name == "Blue Ore")
                     {
-                        factoryInSequence.Storing("Blue Ore");
+                        factoryInSequence.Storing(_Collider.name);
                     }
                     if (_Collider.name == "Red Ore")
                     {
-                        factoryInSequence.Storing("Red Ore");
+                        factoryInSequence.Storing(_Collider.name);
                     }
-                    
+                    if (_Collider.name == "Proccesed Blue Ore")
+                    {
+                        factoryInSequence.Storing(_Collider.name);
+                    }
+                    if (_Collider.name == "Proccesed Red Ore")
+                    {
+                        factoryInSequence.Storing(_Collider.name);
+                    }
+
                 }
                 tempCollider = _Collider;
                 Destroy(_Collider.gameObject);

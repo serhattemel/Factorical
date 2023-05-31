@@ -116,10 +116,13 @@ MonoBehaviour:
   buildEffect: {fileID: 839768739990706369}
   upgradeLevel: 0
   maxUpgradeLevel: 0
-  Rotation_: 0
+  rotation_: 0
   levelText: 
   factoryType: 
-  cooldownDuration: 2
+  proccesorType: 
+  cooldownDuration: 10
+  blueOre: 0
+  redOre: 0
 --- !u!114 &3930410578100992542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +138,7 @@ MonoBehaviour:
   parentOre: {fileID: 0}
   ore: {fileID: 0}
   IsAvailable: 1
+  IsExtractorAvailable: 1
 --- !u!1001 &2144942469491476185
 PrefabInstance:
   m_ObjectHideFlags: 0

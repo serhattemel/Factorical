@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Factory_1 : MonoBehaviour
 {
     private Buildings buildings;
+    private GameManager gameManager;
     public ParticleSystem buildEffect;
     public int upgradeLevel;
     public int maxUpgradeLevel;
@@ -12,9 +14,9 @@ public class Factory_1 : MonoBehaviour
     [SerializeField] private string proccesorType;
     private GridCell gridCell;
     [SerializeField] private float cooldownDuration = 10f;
-
     [SerializeField] private float blueOre = 0;
     [SerializeField] private float redOre = 0;
+    private float factoryPrice=10f;
 
     public string FactoryType { get => factoryType; set => factoryType = value; }
     public GridCell GridCell { get => gridCell; set => gridCell = value; }
@@ -22,11 +24,12 @@ public class Factory_1 : MonoBehaviour
     public int Rotation_ { get => rotation_; set => rotation_ = value; }
     public float BlueOre { get => blueOre; set => blueOre = value; }
     public float RedOre { get => redOre; set => redOre = value; }
-
+    public float FactoryPrice { get => factoryPrice; set => factoryPrice = value; }
 
     void Awake()
     {
         buildings = GameObject.Find("Building").GetComponent<Buildings>();
+        gameManager = GameObject.Find("Building").GetComponent<GameManager>();
         GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
         upgradeLevel = 0;
         maxUpgradeLevel = 3;
@@ -48,10 +51,39 @@ public class Factory_1 : MonoBehaviour
 
     public void Storing(string ore)
     {
+        if (factoryType == "Main")
+        {
+            switch (ore)
+            {
+                case "Blue Ore":
+                    gameManager.Gold += 1;
+                    break;
+                case "Red Ore":
+                    gameManager.Gold += 2;
+                    break;
+                case "Proccesed Blue Ore":
+                    gameManager.Gold += 3;
+                    break;
+                case "Proccesed Red Ore":
+                    gameManager.Gold += 6;
+                    break;
+                default:
+                    gameManager.Gold += 1;
+                    break;
+            }
+            return;
+        }
         if (ore == "Blue Ore")
+        {
+            
             BlueOre++;
+            
+
+        }
         if (ore == "Red Ore")
+        {
             RedOre++;
+        }
     }
     public void Destroy()
     {
@@ -59,6 +91,8 @@ public class Factory_1 : MonoBehaviour
         {
            Destroy(this.GetComponent<Belt>().Collider.gameObject);
         }
+        
+        gameManager.Gold += factoryPrice / 2;
         gridCell.ObjectInThisGridSpace = gridCell.OreInThisGridSpace;
         Destroy(gameObject);
     }
