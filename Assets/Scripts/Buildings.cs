@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +8,11 @@ public class Buildings : MonoBehaviour
 {
     private GridCell _gridCell;
     private GameGrid gameGrid;
+    private GameManager gameManager;
     public Button firstButton;
     public Button secondButton;
     public Button thirdButton;
+    public Button rotationButton;
     [SerializeField] public GameObject buildingMenu;
     public GameObject Target { get; set; }
     Vector3 truePos;
@@ -24,17 +27,19 @@ public class Buildings : MonoBehaviour
     public int _buildingCount = 0;
     public int factortCount { get; set; }
 
-      
+
     void Start()
     {
-        
+
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
+        gameManager = this.GetComponent<GameManager>();
         InstantiateObject(0);
 
     }
     IEnumerator WaitInstantiateObject(int factory)
     {
         yield return new WaitForSeconds(0.1f);
+        rotationButton.gameObject.SetActive(true);
         firstButton.gameObject.SetActive(false);
         secondButton.gameObject.SetActive(false);
         thirdButton.gameObject.SetActive(false);
@@ -46,13 +51,59 @@ public class Buildings : MonoBehaviour
         objectToPlace = _buildingsList[_buildingCount].transform;
         followPointer = true;
         buildingMenu.SetActive(false);
+        gameManager.Gold -= _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice;
 
     }
 
+<<<<<<< Updated upstream
+=======
+    private void SetFactoryType(int factory)
+    {
+        switch (factory)
+        {
+            case 0:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "OreFactory";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                break;
+            case 1:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "WoodFactory";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                break;
+            case 2:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Extractor";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                break;
+            case 4:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Belt";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 2f;
+                break;
+            default:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                break;
+        }
+    }
+>>>>>>> Stashed changes
     public void InstantiateObject(int factory)
     {
+        if (factory == 4)
+        {
+            if (gameManager.Gold < 2)
+            {
+                buildingMode = false;
+                return;
+            }
+        }
+        else
+        {
+            if (gameManager.Gold < 10)
+            {
+                buildingMode = false;
+                return;
+            }
+
+        }
         StartCoroutine(WaitInstantiateObject(factory));
-        
     }
     public bool fallowPointer
     {
@@ -66,8 +117,8 @@ public class Buildings : MonoBehaviour
             truePos.x = Mathf.Floor(Target.transform.position.x / _gridSpaceSize) * _gridSpaceSize + 0.5f;
             truePos.y = Mathf.Floor(Target.transform.position.y / _gridSpaceSize) * _gridSpaceSize + 0.5f;
             truePos.z = Mathf.Floor(Target.transform.position.z / _gridSpaceSize) * _gridSpaceSize + 0.5f;
-       
-        Target.transform.position = truePos;
+
+            Target.transform.position = truePos;
         }
     }
 
@@ -75,12 +126,14 @@ public class Buildings : MonoBehaviour
     {
         if (buildingMode == true)
         {
+
             if (followPointer == false)
             {
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().BluePrintOff();
                 _gridCell.objectInThisGridSpace = _buildingsList[_buildingCount] as GameObject;
                 _buildingCount++;
                 buildingMode = false;
+                rotationButton.gameObject.SetActive(false);
             }
             Ray ray = gameCamera.ScreenPointToRay(Input.mousePosition);
             Vector2 pos;
@@ -97,7 +150,7 @@ public class Buildings : MonoBehaviour
                     firstButton.gameObject.SetActive(true);
                 }
             }
-           
+
         }
     }
 }
