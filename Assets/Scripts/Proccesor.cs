@@ -55,12 +55,17 @@ public class Proccesor : MonoBehaviour
     }
     void Procces()
     {
-        if (mining.ProccesorType == 0 && factory_1.BlueOre > 5)
+        if (mining.ProccesorType == 0 && factory_1.Tree > 5)
+        {
+            mining.InstantiateProccesedOre(mining.ProccesorType, belt);
+            factory_1.Tree -= 5;
+        }
+        else if (mining.ProccesorType == 1 && factory_1.BlueOre > 5)
         {
             mining.InstantiateProccesedOre(mining.ProccesorType, belt);
             factory_1.BlueOre -= 5;
         }
-        else if (mining.ProccesorType == 1 && factory_1.RedOre > 5)
+        if (mining.ProccesorType == 2 && factory_1.RedOre > 5)
         {
             mining.InstantiateProccesedOre(mining.ProccesorType, belt);
             factory_1.RedOre -= 5;

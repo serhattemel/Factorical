@@ -126,7 +126,7 @@ public class OreGenerator : MonoBehaviour
 
                             case < 3:
                                 Resources.Add(Instantiate(treePrefab, new Vector3((x+0.5f), (y + 0.5f), -0.5f), Quaternion.identity));
-                                Resources[resourceCount].name = "tree " + resourceCount;
+                                Resources[resourceCount].name = "tree";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
                                 cell.ObjectInThisGridSpace = Resources[resourceCount];
                                 resourceCount++;
@@ -161,7 +161,7 @@ public class OreGenerator : MonoBehaviour
                                 break;
                             case < 2:
                                 Resources.Add(Instantiate(treePrefab, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.identity));
-                                Resources[resourceCount].name = "tree " + resourceCount;
+                                Resources[resourceCount].name = "tree";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
                                 cell.ObjectInThisGridSpace = Resources[resourceCount];
                                 resourceCount++;

@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16897963, g: 0.5849056, b: 0.11311853, a: 1}
+  m_Color: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9056604, g: 0.33012292, b: 0.055535804, a: 1}
+  m_Color: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2038,7 +2038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9622642, g: 0.70789796, b: 0.14978641, a: 1}
+  m_Color: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3726,7 +3726,7 @@ PrefabInstance:
     - target: {fileID: 595121899007331511, guid: 209741bfa1b1bf8449696ddfdf734009, type: 3}
       propertyPath: oreList.Array.data[0]
       value: 
-      objectReference: {fileID: 7646033243234304273, guid: 1a64ecffc0865d948b96051c2e2d87a4, type: 3}
+      objectReference: {fileID: 2532847025182742766, guid: 8b2905a57308e7544a9a0fa3a9ead1a9, type: 3}
     - target: {fileID: 595121899007331511, guid: 209741bfa1b1bf8449696ddfdf734009, type: 3}
       propertyPath: oreList.Array.data[1]
       value: 
@@ -3742,11 +3742,11 @@ PrefabInstance:
     - target: {fileID: 595121899007331511, guid: 209741bfa1b1bf8449696ddfdf734009, type: 3}
       propertyPath: proccesedOreList.Array.data[0]
       value: 
-      objectReference: {fileID: 2532847025182742766, guid: 8bd5e081a6810f24492a467b392bb0e0, type: 3}
+      objectReference: {fileID: 2532847025182742766, guid: b942358a7684f06409387f238dad96dc, type: 3}
     - target: {fileID: 595121899007331511, guid: 209741bfa1b1bf8449696ddfdf734009, type: 3}
       propertyPath: proccesedOreList.Array.data[1]
       value: 
-      objectReference: {fileID: 2532847025182742766, guid: d9f6bda75e89b574fa202a1a49734933, type: 3}
+      objectReference: {fileID: 2532847025182742766, guid: 8bd5e081a6810f24492a467b392bb0e0, type: 3}
     - target: {fileID: 595121899007331511, guid: 209741bfa1b1bf8449696ddfdf734009, type: 3}
       propertyPath: proccesedOreList.Array.data[2]
       value: 
@@ -4023,6 +4023,8 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: Tree Procces
+      m_Image: {fileID: 0}
     - m_Text: Blue Ore Procces
       m_Image: {fileID: 0}
     - m_Text: Red Ore Procces
@@ -4532,7 +4534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.86666673, g: 0.08627451, b: 0.08627451, a: 1}
+  m_Color: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4792,7 +4794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5044,7 +5046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldText: {fileID: 575891699}
-  gold: 100
+  gold: 10
 --- !u!1 &1924032611
 GameObject:
   m_ObjectHideFlags: 0

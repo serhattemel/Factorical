@@ -16,6 +16,7 @@ public class Factory_1 : MonoBehaviour
     [SerializeField] private float cooldownDuration = 10f;
     [SerializeField] private float blueOre = 0;
     [SerializeField] private float redOre = 0;
+    [SerializeField] private float tree = 0;
     private float factoryPrice=10f;
 
     public string FactoryType { get => factoryType; set => factoryType = value; }
@@ -25,6 +26,7 @@ public class Factory_1 : MonoBehaviour
     public float BlueOre { get => blueOre; set => blueOre = value; }
     public float RedOre { get => redOre; set => redOre = value; }
     public float FactoryPrice { get => factoryPrice; set => factoryPrice = value; }
+    public float Tree { get => tree; set => tree = value; }
 
     void Awake()
     {
@@ -73,12 +75,13 @@ public class Factory_1 : MonoBehaviour
             }
             return;
         }
+        if (ore == "Tree")
+        {
+            Tree++;
+        }
         if (ore == "Blue Ore")
         {
-            
             BlueOre++;
-            
-
         }
         if (ore == "Red Ore")
         {
@@ -99,19 +102,26 @@ public class Factory_1 : MonoBehaviour
  
     public void Upgrade()
     {
+        if (gameManager.Gold < 10)
+        {
+            return;
+        }
         switch (upgradeLevel)
         {
             case 0:
                 CooldownDuration = CooldownDuration - 2;
                 upgradeLevel++;
+                gameManager.Gold -= 10;
                 break;
             case 1:
                 CooldownDuration = CooldownDuration - 2;
                 upgradeLevel++;
+                gameManager.Gold -= 10;
                 break;
             case 2:
                 CooldownDuration = CooldownDuration - 2;
                 upgradeLevel++;
+                gameManager.Gold -= 10;
                 break;
         }
         

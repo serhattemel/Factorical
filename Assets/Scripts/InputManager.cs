@@ -89,7 +89,12 @@ public class InputManager : MonoBehaviour
         string terrainName = _gridCell.transform.GetChild(0).name;
         string factoryname = buildings._buildingsList[buildings._buildingCount].name;
         _factory = GameObject.Find(factoryname).GetComponent<Factory_1>();
-        if (_factory.FactoryType == "Extractor")
+        if (_factory.FactoryType == "Extractor" && _gridCell.ObjectInThisGridSpace.name != "tree")
+        {
+            Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
+            StartCoroutine(PlacingCoroutine());
+        }
+        else if(_factory.FactoryType == "Wood Factory" && _gridCell.ObjectInThisGridSpace.name == "tree")
         {
             Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
             StartCoroutine(PlacingCoroutine());
@@ -149,8 +154,7 @@ public class InputManager : MonoBehaviour
             _factory.Upgrade();
             factoryName.text = _factory.FactoryType;
             factoryLevel.text = _factory.upgradeLevel.ToString();
-            //if (_factory.upgradeLevel == 3)
-            //    thirdButton.gameObject.SetActive(false);
+            
         }
         else
             Debug.Log("Fabrika seçin");

@@ -33,7 +33,7 @@ public class Buildings : MonoBehaviour
         
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
         gameManager = this.GetComponent<GameManager>();
-        InstantiateObject(0);
+        InstantiateObject(3);
 
     }
     IEnumerator WaitInstantiateObject(int factory)
@@ -61,11 +61,11 @@ public class Buildings : MonoBehaviour
         switch (factory)
         {
             case 0:
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "OreFactory";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Ore Factory";
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
                 break;
             case 1:
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "WoodFactory";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Wood Factory";
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
                 break;
             case 2:

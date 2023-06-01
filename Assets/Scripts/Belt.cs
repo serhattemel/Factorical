@@ -102,6 +102,10 @@ public class Belt : MonoBehaviour
                 
                 if (_Collider != tempCollider)
                 {
+                    if (_Collider.name == "Tree")
+                    {
+                        factoryInSequence.Storing(_Collider.name);
+                    }
                     if (_Collider.name == "Blue Ore")
                     {
                         factoryInSequence.Storing(_Collider.name);

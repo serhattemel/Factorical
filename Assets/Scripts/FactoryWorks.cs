@@ -63,6 +63,20 @@ public class FactoryWorks : MonoBehaviour
             }
             Mining();
         }
+        else  if (factoryType == "Wood Factory" && CheckBelt() && buildings.buildingMode == false && belt.isSpaceTaken == false)
+        {
+            if (IsAvailable == false)
+            {
+                return;
+            }
+
+            gridCell = factory_1.GridCell;
+            if (gridCell.OreInThisGridSpace != null)
+            {
+                ore = gridCell.OreInThisGridSpace;
+            }
+            Mining();
+        }
         
     }
     
