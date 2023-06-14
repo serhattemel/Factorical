@@ -11,12 +11,14 @@ public class Proccesor : MonoBehaviour
     private Mining mining;
     [SerializeField] private GameObject ore;
     private GridCell gridCell;
-    Belt belt;
+    [SerializeField] Belt belt;
     public readonly List<GameObject> oreList = new List<GameObject>();
 
     public bool IsAvailable = true;
     //[SerializeField] public float CooldownDuration = 10f;
+    [SerializeField] private int proccesorType;
 
+    public int ProccesorType { get => proccesorType; set => proccesorType = value; }
 
 
 
@@ -29,6 +31,13 @@ public class Proccesor : MonoBehaviour
         factoryType = factory_1.FactoryType;
         StartCoroutine(StartCooldown());
     }
+    public void ShakeForBug()
+    {
+        Vector3 rotationToAdd = new Vector3(0, 0, -3f);
+        transform.Rotate(rotationToAdd);
+        transform.Rotate(-rotationToAdd);
+    }
+
     private Belt CheckBelt()
     {
         RaycastHit hit;
@@ -43,6 +52,7 @@ public class Proccesor : MonoBehaviour
 
             return belt;
         }
+        ShakeForBug();
         return null;
     }
 
@@ -55,20 +65,26 @@ public class Proccesor : MonoBehaviour
     }
     void Procces()
     {
-        if (mining.ProccesorType == 0 && factory_1.Tree > 5)
+        if (ProccesorType == 0 && factory_1.Tree > 5)
         {
-            mining.InstantiateProccesedOre(mining.ProccesorType, belt);
+            mining.InstantiateProccesedOre(ProccesorType, belt);
             factory_1.Tree -= 5;
         }
-        else if (mining.ProccesorType == 1 && factory_1.BlueOre > 5)
+        else if (ProccesorType == 1 && factory_1.BlueOre > 5)
         {
-            mining.InstantiateProccesedOre(mining.ProccesorType, belt);
+            mining.InstantiateProccesedOre(ProccesorType, belt);
             factory_1.BlueOre -= 5;
         }
-        if (mining.ProccesorType == 2 && factory_1.RedOre > 5)
+        else if (ProccesorType == 2 && factory_1.RedOre > 5)
         {
-            mining.InstantiateProccesedOre(mining.ProccesorType, belt);
+            mining.InstantiateProccesedOre(ProccesorType, belt);
             factory_1.RedOre -= 5;
+        }
+        else if (ProccesorType == 3 && factory_1.ProccesedRedOre > 5 && factory_1.ProccesedBlueOre > 5)
+        {
+            mining.InstantiateProccesedOre(ProccesorType, belt);
+            factory_1.ProccesedRedOre -= 5;
+            factory_1.ProccesedBlueOre -= 5;
         }
         StartCoroutine(StartCooldown());
     }

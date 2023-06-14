@@ -11,13 +11,14 @@ public class Factory_1 : MonoBehaviour
     [SerializeField] private int rotation_;
     public string levelText;
     [SerializeField] private string factoryType;
-    [SerializeField] private string proccesorType;
     private GridCell gridCell;
     [SerializeField] private float cooldownDuration = 10f;
     [SerializeField] private float blueOre = 0;
     [SerializeField] private float redOre = 0;
+    [SerializeField] private float proccesedBlueOre = 0;
+    [SerializeField] private float proccesedRedOre = 0;
     [SerializeField] private float tree = 0;
-    private float factoryPrice=10f;
+    private float factoryPrice = 10f;
 
     public string FactoryType { get => factoryType; set => factoryType = value; }
     public GridCell GridCell { get => gridCell; set => gridCell = value; }
@@ -27,6 +28,8 @@ public class Factory_1 : MonoBehaviour
     public float RedOre { get => redOre; set => redOre = value; }
     public float FactoryPrice { get => factoryPrice; set => factoryPrice = value; }
     public float Tree { get => tree; set => tree = value; }
+    public float ProccesedBlueOre { get => proccesedBlueOre; set => proccesedBlueOre = value; }
+    public float ProccesedRedOre { get => proccesedRedOre; set => proccesedRedOre = value; }
 
     void Awake()
     {
@@ -36,7 +39,7 @@ public class Factory_1 : MonoBehaviour
         upgradeLevel = 0;
         maxUpgradeLevel = 3;
         Rotation_ = 0;
-        
+
 
     }
     private void Update()
@@ -75,31 +78,57 @@ public class Factory_1 : MonoBehaviour
             }
             return;
         }
-        if (ore == "Tree")
+        switch (ore)
         {
-            Tree++;
+            case "Tree":
+                Tree++;
+                break;
+            case "Blue Ore":
+                BlueOre++;
+                break;
+            case "Red Ore":
+                RedOre++;
+                break;
+            case "Proccesed Blue Ore":
+                ProccesedBlueOre++;
+                break;
+            case "Proccesed Red Ore":
+                ProccesedRedOre++;
+                break;
         }
-        if (ore == "Blue Ore")
-        {
-            BlueOre++;
-        }
-        if (ore == "Red Ore")
-        {
-            RedOre++;
-        }
+        //if (ore == "Tree")
+        //{
+        //    Tree++;
+        //}
+        //if (ore == "Blue Ore")
+        //{
+        //    BlueOre++;
+        //}
+        //if (ore == "Red Ore")
+        //{
+        //    RedOre++;
+        //}
+        //if (ore == "Proccesed Blue Ore")
+        //{
+        //    ProccesedBlueOre++;
+        //}
+        //if (ore == "Proccesed Red Ore")
+        //{
+        //    ProccesedRedOre++;
+        //}
     }
     public void Destroy()
     {
-        if (factoryType == "Belt"&& this.GetComponent<Belt>().Collider != null)
+        if (factoryType == "Belt" && this.GetComponent<Belt>().Collider != null)
         {
-           Destroy(this.GetComponent<Belt>().Collider.gameObject);
+            Destroy(this.GetComponent<Belt>().Collider.gameObject);
         }
-        
+
         gameManager.Gold += factoryPrice / 2;
         gridCell.ObjectInThisGridSpace = gridCell.OreInThisGridSpace;
         Destroy(gameObject);
     }
- 
+
     public void Upgrade()
     {
         if (gameManager.Gold < 10)
@@ -124,12 +153,12 @@ public class Factory_1 : MonoBehaviour
                 gameManager.Gold -= 10;
                 break;
         }
-        
-        
+
+
     }
     public void RotateByDegrees()
     {
-        Vector3 rotationToAdd = new Vector3(0,0, -90f);
+        Vector3 rotationToAdd = new Vector3(0, 0, -90f);
         transform.Rotate(rotationToAdd);
         Rotation_ += 1;
         if (Rotation_ == 4)
@@ -141,10 +170,10 @@ public class Factory_1 : MonoBehaviour
     public void BluePrintOff()
     {
         GetComponentInChildren<MeshRenderer>().material.color = Color.white;
-        if(buildEffect!=null)
-        buildEffect.Play();
-        if(gameObject.GetComponent<Animation>()!=null)
-        gameObject.GetComponent<Animation>().Play();
+        if (buildEffect != null)
+            buildEffect.Play();
+        if (gameObject.GetComponent<Animation>() != null)
+            gameObject.GetComponent<Animation>().Play();
     }
 
 }

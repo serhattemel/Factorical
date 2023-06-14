@@ -11,11 +11,12 @@ public class InputManager : MonoBehaviour
     public Button secondButton;
     public Button thirdButton;
     public Button rotationButton, roadButton;
+    public Dropdown dropdown;
     private Factory_1 _factory;
     private Belt _belt;
     private GridCell _gridCell, cellMouseIsOver;
-    public Text factoryName,factoryLevel;
-    private float startTime, endTime,totalTime;
+    public Text factoryName, factoryLevel;
+    private float startTime, endTime, totalTime;
     [SerializeField] private LayerMask whatIsAGridLayer;
     List<RaycastResult> results;
 
@@ -31,7 +32,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             startTime = Time.time;
@@ -54,8 +55,8 @@ public class InputManager : MonoBehaviour
                     return;
             }
         }
-        
-        
+
+
     }
     IEnumerator PlacingCoroutine()
     {
@@ -67,7 +68,7 @@ public class InputManager : MonoBehaviour
     }
     private void ClickOnGrid()
     {
-       if (moving.Scrolling == false)
+        if (moving.Scrolling == false)
         {
             if (buildings.buildingMode == true && results.Count == 0)
             {
@@ -94,12 +95,12 @@ public class InputManager : MonoBehaviour
             Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
             StartCoroutine(PlacingCoroutine());
         }
-        else if(_factory.FactoryType == "Wood Factory" && _gridCell.ObjectInThisGridSpace.name == "tree")
+        else if (_factory.FactoryType == "Wood Factory" && _gridCell.ObjectInThisGridSpace.name == "tree")
         {
             Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
             StartCoroutine(PlacingCoroutine());
         }
-        else if(_gridCell.ObjectInThisGridSpace == null /*&& terrainName != "ice"*/)
+        else if (_gridCell.ObjectInThisGridSpace == null /*&& terrainName != "ice"*/)
         {
             Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
             StartCoroutine(PlacingCoroutine());
@@ -143,7 +144,16 @@ public class InputManager : MonoBehaviour
                 _factory.Destroy();
                 secondButton.gameObject.SetActive(false);
             }
-        }   
+        }
+        else
+            Debug.Log("Fabrika seçin");
+    }
+    public void ChangeProccesorType()
+    {
+        if (_factory)
+        {
+            _factory.GetComponent<Proccesor>().ProccesorType = dropdown.value;
+        }
         else
             Debug.Log("Fabrika seçin");
     }
@@ -154,10 +164,20 @@ public class InputManager : MonoBehaviour
             _factory.Upgrade();
             factoryName.text = _factory.FactoryType;
             factoryLevel.text = _factory.upgradeLevel.ToString();
-            
+
         }
         else
             Debug.Log("Fabrika seçin");
+    }
+    public void MenuValues()
+    {
+        if (_factory.FactoryType != "Ore Factory")
+        {
+            dropdown.gameObject.SetActive(false);
+            return;
+        }
+        dropdown.gameObject.SetActive(true);
+        dropdown.value = _factory.GetComponent<Proccesor>().ProccesorType;
     }
     public void RotateSelectedBuilding()
     {
@@ -178,7 +198,7 @@ public class InputManager : MonoBehaviour
         results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPos, results);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray,out RaycastHit hitInfo, 100f, whatIsAGridLayer))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, whatIsAGridLayer))
         {
             return hitInfo.transform.GetComponent<GridCell>();
         }

@@ -27,13 +27,13 @@ public class Buildings : MonoBehaviour
     public int _buildingCount = 0;
     public int factortCount { get; set; }
 
-      
+
     void Start()
     {
-        
+
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
         gameManager = this.GetComponent<GameManager>();
-        InstantiateObject(3);
+        //InstantiateObject(3);
 
     }
     IEnumerator WaitInstantiateObject(int factory)
@@ -49,11 +49,11 @@ public class Buildings : MonoBehaviour
         _buildingsList[_buildingCount].transform.SetParent(object1.transform);
         Target = _buildingsList[_buildingCount];
         objectToPlace = _buildingsList[_buildingCount].transform;
-        followPointer = true;
         SetFactoryType(factory);
+        followPointer = true;
         buildingMenu.SetActive(false);
-            gameManager.Gold -= _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice;
-        
+        gameManager.Gold -= _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice;
+
     }
 
     private void SetFactoryType(int factory)
@@ -72,18 +72,20 @@ public class Buildings : MonoBehaviour
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Extractor";
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
                 break;
+            case 3:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 1000f;
+                break;
             case 4:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Belt";
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 2f;
                 break;
-            default:
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 1000f;
-                break;
+
         }
     }
     public void InstantiateObject(int factory)
     {
+
         if (factory == 4)
         {
             if (gameManager.Gold < 2)
@@ -107,7 +109,6 @@ public class Buildings : MonoBehaviour
                 buildingMode = false;
                 return;
             }
-
         }
         StartCoroutine(WaitInstantiateObject(factory));
     }
@@ -123,8 +124,8 @@ public class Buildings : MonoBehaviour
             truePos.x = Mathf.Floor(Target.transform.position.x / _gridSpaceSize) * _gridSpaceSize + 0.5f;
             truePos.y = Mathf.Floor(Target.transform.position.y / _gridSpaceSize) * _gridSpaceSize + 0.5f;
             truePos.z = Mathf.Floor(Target.transform.position.z / _gridSpaceSize) * _gridSpaceSize + 0.5f;
-       
-        Target.transform.position = truePos;
+
+            Target.transform.position = truePos;
         }
     }
 
@@ -133,7 +134,7 @@ public class Buildings : MonoBehaviour
 
         if (buildingMode == true)
         {
-            
+
             if (followPointer == false)
             {
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().BluePrintOff();
@@ -156,14 +157,14 @@ public class Buildings : MonoBehaviour
             if (followPointer == true && Physics.Raycast(ray, out RaycastHit hitInfo))
             {
                 objectToPlace.position = hitInfo.point;
-                if (_buildingCount == 0)
-                {
-                    objectToPlace.position = new Vector3(gameGrid.Width / 2, gameGrid.Height / 2, -0.5f);
-                    fallowPointer = false;
-                    firstButton.gameObject.SetActive(true);
-                }
+                //if (_buildingCount == 0)
+                //{
+                //    objectToPlace.position = new Vector3(gameGrid.Width / 2, gameGrid.Height / 2, -0.5f);
+                //    fallowPointer = false;
+                //    firstButton.gameObject.SetActive(true);
+                //}
             }
-           
+
         }
     }
 }
