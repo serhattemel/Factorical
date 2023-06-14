@@ -143,6 +143,8 @@ public class Factory_1 : MonoBehaviour
         GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         if(buildEffect!=null)
         buildEffect.Play();
+        if(gameObject.GetComponent<Animation>()!=null)
+        gameObject.GetComponent<Animation>().Play();
     }
 
 }

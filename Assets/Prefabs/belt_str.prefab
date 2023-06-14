@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 3001208045579604025}
   - component: {fileID: -2278858230502680578}
   - component: {fileID: 3412160131734011605}
+  - component: {fileID: -3146880678798064692}
   m_Layer: 7
   m_Name: belt_str
   m_TagString: Belt
@@ -572,11 +573,14 @@ MonoBehaviour:
   buildEffect: {fileID: 0}
   upgradeLevel: 0
   maxUpgradeLevel: 0
-  Rotation_: 0
+  rotation_: 0
   levelText: 
   factoryType: 
+  proccesorType: 
   cooldownDuration: 10
   blueOre: 0
+  redOre: 0
+  tree: 0
 --- !u!114 &-2278858230502680578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,6 +614,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!111 &-3146880678798064692
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912105027815401770}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d754cdf5b59c2c3439ee7e5969f85755, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d754cdf5b59c2c3439ee7e5969f85755, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &3597031332182117575
 PrefabInstance:
   m_ObjectHideFlags: 0

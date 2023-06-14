@@ -78,7 +78,7 @@ public class Buildings : MonoBehaviour
                 break;
             default:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 1000f;
                 break;
         }
     }
@@ -87,6 +87,14 @@ public class Buildings : MonoBehaviour
         if (factory == 4)
         {
             if (gameManager.Gold < 2)
+            {
+                buildingMode = false;
+                return;
+            }
+        }
+        else if (factory == 3)
+        {
+            if (gameManager.Gold < 1000)
             {
                 buildingMode = false;
                 return;
