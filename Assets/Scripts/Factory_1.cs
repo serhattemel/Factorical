@@ -60,20 +60,23 @@ public class Factory_1 : MonoBehaviour
         {
             switch (ore)
             {
-                case "Blue Ore":
-                    gameManager.Gold += 1;
-                    break;
-                case "Red Ore":
-                    gameManager.Gold += 2;
-                    break;
-                case "Proccesed Blue Ore":
+                case "Tree":
                     gameManager.Gold += 3;
                     break;
-                case "Proccesed Red Ore":
+                case "Blue Ore":
+                    gameManager.Gold += 4;
+                    break;
+                case "Red Ore":
                     gameManager.Gold += 6;
                     break;
-                default:
-                    gameManager.Gold += 1;
+                case "Proccesed Blue Ore":
+                    gameManager.Gold += 10;
+                    break;
+                case "Proccesed Red Ore":
+                    gameManager.Gold += 14;
+                    break;
+                case "Proccesed Gearwheel":
+                    gameManager.Gold += 50;
                     break;
             }
             return;
@@ -131,7 +134,7 @@ public class Factory_1 : MonoBehaviour
 
     public void Upgrade()
     {
-        if (gameManager.Gold < 10)
+        if (gameManager.Gold <= 100)
         {
             return;
         }
@@ -140,17 +143,17 @@ public class Factory_1 : MonoBehaviour
             case 0:
                 CooldownDuration = CooldownDuration - 2;
                 upgradeLevel++;
-                gameManager.Gold -= 10;
+                gameManager.Gold -= 100;
                 break;
             case 1:
                 CooldownDuration = CooldownDuration - 2;
                 upgradeLevel++;
-                gameManager.Gold -= 10;
+                gameManager.Gold -= 100;
                 break;
             case 2:
                 CooldownDuration = CooldownDuration - 2;
                 upgradeLevel++;
-                gameManager.Gold -= 10;
+                gameManager.Gold -= 100;
                 break;
         }
 

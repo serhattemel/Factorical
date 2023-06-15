@@ -13,6 +13,7 @@ public class Buildings : MonoBehaviour
     public Button secondButton;
     public Button thirdButton;
     public Button rotationButton;
+    public Button beltButton;
     [SerializeField] public GameObject buildingMenu;
     public GameObject Target { get; set; }
     Vector3 truePos;
@@ -62,15 +63,15 @@ public class Buildings : MonoBehaviour
         {
             case 0:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Ore Factory";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 100f;
                 break;
             case 1:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Wood Factory";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 50f;
                 break;
             case 2:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Extractor";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 50f;
                 break;
             case 3:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
@@ -93,6 +94,8 @@ public class Buildings : MonoBehaviour
                 buildingMode = false;
                 return;
             }
+            beltButton.gameObject.SetActive(false);
+            rotationButton.gameObject.SetActive(true);
         }
         else if (factory == 3)
         {
@@ -102,9 +105,17 @@ public class Buildings : MonoBehaviour
                 return;
             }
         }
-        else
+        else if (factory == 0)
         {
-            if (gameManager.Gold < 10)
+            if (gameManager.Gold < 100)
+            {
+                buildingMode = false;
+                return;
+            }
+        }
+        else if (factory == 2 || factory == 1)
+        {
+            if (gameManager.Gold < 50)
             {
                 buildingMode = false;
                 return;

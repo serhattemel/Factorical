@@ -108,7 +108,7 @@ public class OreGenerator : MonoBehaviour
                     {
                         switch (tree)
                         {
-                            case > 15:
+                            case > 14:
                                 Resources.Add(Instantiate(ore_blue, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.Euler(0, 0, Random.Range(0, 360))));
                                 Resources[resourceCount].name = "blue ore";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
@@ -144,7 +144,7 @@ public class OreGenerator : MonoBehaviour
                     {
                         switch (tree)
                         {
-                            case > 15:
+                            case > 14:
                                 Resources.Add(Instantiate(ore_red, new Vector3((x + 0.5f), (y + 0.5f), -0.5f), Quaternion.Euler(0, 0, Random.Range(0, 360))));
                                 Resources[resourceCount].name = "red ore";
                                 Resources[resourceCount].transform.SetParent(object2.transform);
