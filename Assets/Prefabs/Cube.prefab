@@ -4932,6 +4932,10 @@ MonoBehaviour:
   factoryType: 
   cooldownDuration: 10
   blueOre: 0
+  redOre: 0
+  proccesedBlueOre: 0
+  proccesedRedOre: 0
+  tree: 0
 --- !u!114 &-8491280806718833907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4946,7 +4950,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentOre: {fileID: 0}
   ore: {fileID: 0}
+  belt: {fileID: 0}
   IsAvailable: 1
+  proccesorType: 0
 --- !u!1 &4309407059703549787
 GameObject:
   m_ObjectHideFlags: 0

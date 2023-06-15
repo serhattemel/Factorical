@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 213067793103854792}
   - component: {fileID: 5835748787866428889}
   - component: {fileID: 3930410578100992542}
-  - component: {fileID: 8135208488780399746}
   m_Layer: 7
   m_Name: Cube_3
   m_TagString: Factory
@@ -116,16 +115,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildEffect: {fileID: 839768739990706369}
-  buildEffectFall: {fileID: 0}
   upgradeLevel: 0
   maxUpgradeLevel: 0
   rotation_: 0
   levelText: 
   factoryType: 
-  proccesorType: 
   cooldownDuration: 10
   blueOre: 0
   redOre: 0
+  proccesedBlueOre: 0
+  proccesedRedOre: 0
   tree: 0
 --- !u!114 &3930410578100992542
 MonoBehaviour:
@@ -143,22 +142,6 @@ MonoBehaviour:
   ore: {fileID: 0}
   IsAvailable: 1
   IsExtractorAvailable: 1
---- !u!111 &8135208488780399746
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213067793103854794}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: d754cdf5b59c2c3439ee7e5969f85755, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: d754cdf5b59c2c3439ee7e5969f85755, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &886400082767316216
 GameObject:
   m_ObjectHideFlags: 0
