@@ -10,9 +10,9 @@ public class Belt : MonoBehaviour
     private static int _beltID = 0;
     public Belt beltInSequence;
     public Factory_1 factoryInSequence;
-    public bool isSpaceTaken=false;
+    public bool isSpaceTaken = false;
     public float speed = 1f;
-    [SerializeField]private Collider _Collider;
+    [SerializeField] private Collider _Collider;
     private Collider tempCollider;
 
     public Collider Collider { get => _Collider; set => _Collider = value; }
@@ -62,7 +62,7 @@ public class Belt : MonoBehaviour
     //            factoryInSequence = hitCollider.gameObject.GetComponent<Factory_1>();
     //            return factoryInSequence;
     //        }
-            
+
     //    }
     //    return null;
     //}
@@ -96,10 +96,10 @@ public class Belt : MonoBehaviour
                     Vector3.MoveTowards(_Collider.transform.position, toPosition, step);
                 yield return null;
             }
-            
+
             if (_Collider != null)
             {
-                
+
                 if (_Collider != tempCollider)
                 {
                     if (_Collider.name == "Tree")
@@ -122,6 +122,10 @@ public class Belt : MonoBehaviour
                     {
                         factoryInSequence.Storing(_Collider.name);
                     }
+                    if (_Collider.name == "Proccesed Gearwheel")
+                    {
+                        factoryInSequence.Storing(_Collider.name);
+                    }
 
                 }
                 tempCollider = _Collider;
@@ -131,14 +135,14 @@ public class Belt : MonoBehaviour
             //_Collider = null;
         }
     }
-    
+
     private Factory_1 FindFactory()
     {
         Ray ray;
 
         ray = new Ray(this.transform.position, transform.up);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
             Debug.DrawRay(transform.position, transform.up, Color.blue);
             Factory_1 factory = hit.collider.GetComponent<Factory_1>();
@@ -146,36 +150,36 @@ public class Belt : MonoBehaviour
         }
         return null;
     }
-    
+
     private Belt FindNextBelt()
     {
         RaycastHit hit;
         Ray ray;
-        
+
         ray = new Ray(this.transform.position, transform.up);
-        
+
         if (Physics.Raycast(ray, out hit, 1f))
         {
             Debug.DrawRay(transform.position, transform.up, Color.red);
             Belt belt = hit.collider.GetComponent<Belt>();
-                
+
             return belt;
         }
         return null;
     }
-    
+
     public bool FindItem()
     {
         RaycastHit hit;
         var up = transform.forward;
 
         Ray ray = new Ray(transform.position, -up);
-        
-        if (Physics.Raycast(ray, out hit,2f))
+
+        if (Physics.Raycast(ray, out hit, 2f))
         {
-            Debug.DrawRay(transform.position, -transform.forward, Color.red,2f);
+            Debug.DrawRay(transform.position, -transform.forward, Color.red, 2f);
             _Collider = hit.collider;
-            
+
             if (_Collider != null && _Collider.gameObject.CompareTag("Ore"))
             {
                 isSpaceTaken = true;
