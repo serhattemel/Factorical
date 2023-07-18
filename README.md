@@ -1,4 +1,3 @@
-
 # Factorical
 
 Bu oyun `Serhat Temel` ve `Necdet Gedik` tarafından Balıkesir Üniversite'si Bilgisayar Mühendisliği bölümü bitirme projesi olarak geliştirilmiştir.
