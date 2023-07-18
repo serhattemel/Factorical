@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,12 +13,13 @@ public class Buildings : MonoBehaviour
     public Button secondButton;
     public Button thirdButton;
     public Button rotationButton;
+    public Button beltButton;
     [SerializeField] public GameObject buildingMenu;
     public GameObject Target { get; set; }
     Vector3 truePos;
     private float _gridSpaceSize = 1.0f;
     [SerializeField] GameObject object1, object2;
-    readonly List<GameObject> _buildingsList = new List<GameObject>();
+    public readonly List<GameObject> _buildingsList = new List<GameObject>();
     [SerializeField] List<GameObject> factoryList = new List<GameObject>();
     public Transform objectToPlace { get; set; }
     [SerializeField] private Camera gameCamera;
@@ -33,7 +34,7 @@ public class Buildings : MonoBehaviour
 
         gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
         gameManager = this.GetComponent<GameManager>();
-        InstantiateObject(0);
+        //InstantiateObject(3);
 
     }
     IEnumerator WaitInstantiateObject(int factory)
@@ -49,43 +50,43 @@ public class Buildings : MonoBehaviour
         _buildingsList[_buildingCount].transform.SetParent(object1.transform);
         Target = _buildingsList[_buildingCount];
         objectToPlace = _buildingsList[_buildingCount].transform;
+        SetFactoryType(factory);
         followPointer = true;
         buildingMenu.SetActive(false);
         gameManager.Gold -= _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice;
 
     }
 
-<<<<<<< Updated upstream
-=======
     private void SetFactoryType(int factory)
     {
         switch (factory)
         {
             case 0:
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "OreFactory";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Ore Factory";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 100f;
                 break;
             case 1:
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "WoodFactory";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Wood Factory";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 50f;
                 break;
             case 2:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Extractor";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 50f;
+                break;
+            case 3:
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 1000f;
                 break;
             case 4:
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Belt";
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 2f;
                 break;
-            default:
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryType = "Main";
-                _buildingsList[_buildingCount].GetComponent<Factory_1>().FactoryPrice = 10f;
-                break;
+
         }
     }
->>>>>>> Stashed changes
     public void InstantiateObject(int factory)
     {
+
         if (factory == 4)
         {
             if (gameManager.Gold < 2)
@@ -93,15 +94,32 @@ public class Buildings : MonoBehaviour
                 buildingMode = false;
                 return;
             }
+            beltButton.gameObject.SetActive(false);
+            rotationButton.gameObject.SetActive(true);
         }
-        else
+        else if (factory == 3)
         {
-            if (gameManager.Gold < 10)
+            if (gameManager.Gold < 1000)
             {
                 buildingMode = false;
                 return;
             }
-
+        }
+        else if (factory == 0)
+        {
+            if (gameManager.Gold < 100)
+            {
+                buildingMode = false;
+                return;
+            }
+        }
+        else if (factory == 2 || factory == 1)
+        {
+            if (gameManager.Gold < 50)
+            {
+                buildingMode = false;
+                return;
+            }
         }
         StartCoroutine(WaitInstantiateObject(factory));
     }
@@ -124,13 +142,20 @@ public class Buildings : MonoBehaviour
 
     void Update()
     {
+
         if (buildingMode == true)
         {
 
             if (followPointer == false)
             {
                 _buildingsList[_buildingCount].GetComponent<Factory_1>().BluePrintOff();
-                _gridCell.objectInThisGridSpace = _buildingsList[_buildingCount] as GameObject;
+                _buildingsList[_buildingCount].gameObject.transform.position = new Vector3(_buildingsList[_buildingCount].gameObject.transform.position.x, _buildingsList[_buildingCount].gameObject.transform.position.y, -0.5f);
+                if (_gridCell.ObjectInThisGridSpace != null)
+                {
+                    _gridCell.OreInThisGridSpace = _gridCell.ObjectInThisGridSpace;
+                }
+                _gridCell.ObjectInThisGridSpace = _buildingsList[_buildingCount] as GameObject;
+                _buildingsList[_buildingCount].GetComponent<Factory_1>().FindGridCell();
                 _buildingCount++;
                 buildingMode = false;
                 rotationButton.gameObject.SetActive(false);
@@ -143,12 +168,12 @@ public class Buildings : MonoBehaviour
             if (followPointer == true && Physics.Raycast(ray, out RaycastHit hitInfo))
             {
                 objectToPlace.position = hitInfo.point;
-                if (_buildingCount == 0)
-                {
-                    objectToPlace.position = new Vector3(gameGrid.Width / 2, gameGrid.Height / 2, -0.5f);
-                    fallowPointer = false;
-                    firstButton.gameObject.SetActive(true);
-                }
+                //if (_buildingCount == 0)
+                //{
+                //    objectToPlace.position = new Vector3(gameGrid.Width / 2, gameGrid.Height / 2, -0.5f);
+                //    fallowPointer = false;
+                //    firstButton.gameObject.SetActive(true);
+                //}
             }
 
         }

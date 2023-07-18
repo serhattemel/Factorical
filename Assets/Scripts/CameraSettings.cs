@@ -11,6 +11,8 @@ public class CameraSettings : MonoBehaviour
     public float cameraZoom = -20;
     public float zoomOutMin = 1;
     public float zoomOutMax = 8;
+    private int _width, _height;
+    private GameGrid gameGrid;
 
     [SerializeField] private bool scrolling=false;
     public bool Scrolling
@@ -22,6 +24,9 @@ public class CameraSettings : MonoBehaviour
     {
         scrolling = false;
         Vector2Int = FindObjectOfType<GameGrid>().GetPosition();
+        gameGrid = GameObject.Find("GameGrid").GetComponent<GameGrid>();
+        _width = gameGrid.Width;
+        _height = gameGrid.Height;
         gameCamera.transform.position = new Vector3(Vector2Int.x / 2 - 0.5f, Vector2Int.y / 2 - 10.5f, cameraZoom);
     }
 
@@ -53,8 +58,12 @@ public class CameraSettings : MonoBehaviour
             }
             if (Input.GetMouseButton(0))
             {
-                Vector3 direction = touchStart - GetWorldPosition(groundZ);
-                Camera.main.transform.position += direction;
+                    Vector3 direction = touchStart - GetWorldPosition(groundZ);
+                    Camera.main.transform.position += direction;
+                    //Camera.main.transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, 20, 180), Mathf.Clamp(Camera.main.transform.position.y, 10, 170), Camera.main.transform.position.z);
+                    Camera.main.transform.position = new Vector3(Mathf.Clamp(Camera.main.transform.position.x, 20, _height-20), Mathf.Clamp(Camera.main.transform.position.y, 5, _width-25), Camera.main.transform.position.z);
+                
+                
             }
         }
     }

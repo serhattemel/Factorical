@@ -102,6 +102,10 @@ public class Belt : MonoBehaviour
 
                 if (_Collider != tempCollider)
                 {
+                    if (_Collider.name == "Tree")
+                    {
+                        factoryInSequence.Storing(_Collider.name);
+                    }
                     if (_Collider.name == "Blue Ore")
                     {
                         factoryInSequence.Storing(_Collider.name);
@@ -115,6 +119,10 @@ public class Belt : MonoBehaviour
                         factoryInSequence.Storing(_Collider.name);
                     }
                     if (_Collider.name == "Proccesed Red Ore")
+                    {
+                        factoryInSequence.Storing(_Collider.name);
+                    }
+                    if (_Collider.name == "Proccesed Gearwheel")
                     {
                         factoryInSequence.Storing(_Collider.name);
                     }
@@ -134,7 +142,7 @@ public class Belt : MonoBehaviour
 
         ray = new Ray(this.transform.position, transform.up);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
             Debug.DrawRay(transform.position, transform.up, Color.blue);
             Factory_1 factory = hit.collider.GetComponent<Factory_1>();
