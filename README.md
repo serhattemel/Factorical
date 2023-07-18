@@ -8,7 +8,8 @@ etmesini sağlamaktır. Oyuncunun inşa ettiği bu yapılar, otomatik olarak bel
 kereste şeklinde dönüştürülür. Bu elde edilen materyaller, oyuncunun kendi stratejik planına bağlı olarak belirlenen üretim
 bantları aracılığıyla bir sonraki işleme durağına sevk edilir. Söz konusu sistem zamanla daha karmaşık hale gelir.
 
-![Uygulama Ekran Görüntüsü](![gündüz](https://github.com/serhattemel/Factory-Game-3D/assets/53862681/275f116e-d16d-4a75-81e0-b57382056621))
-)
+<img src="https://github.com/serhattemel/Factory-Game-3D/assets/53862681/275f116e-d16d-4a75-81e0-b57382056621" width="550" height="300">
+
+<img src="![fabrika](https://github.com/serhattemel/Factory-Game-3D/assets/53862681/de7208b9-d503-42e4-98d9-5718f50b899c)" width="550" height="300">
 
 
