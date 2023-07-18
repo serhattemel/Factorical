@@ -10,6 +10,13 @@ bantları aracılığıyla bir sonraki işleme durağına sevk edilir. Söz konu
 
 <img src="https://github.com/serhattemel/Factory-Game-3D/assets/53862681/275f116e-d16d-4a75-81e0-b57382056621" width="550" height="300">
 
-<img src="![fabrika](https://github.com/serhattemel/Factory-Game-3D/assets/53862681/de7208b9-d503-42e4-98d9-5718f50b899c)" width="550" height="300">
+## Oyundaki Özellikler ve Algoritmalar
+1- Haritayı karelere bölerek nesnelerin bu karelere yerleştirilmesi için `Grid System ve Grid Snapping`
 
+2- Rastege harita oluşumu için `Cellular Automata`
 
+3- Harita üzerinde rastgele kaynak oluşumu için `Perlin Noise`
+
+4- Kaynakları bir noktadan başka bir noktaya taşımak için `Belt System`
+
+![fabrika](https://github.com/serhattemel/Factory-Game-3D/assets/53862681/f799314c-ec86-4433-8822-13d041762e49)
