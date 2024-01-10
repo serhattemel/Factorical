@@ -5,7 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - GridCell
+  - Undefined
   - Factory
+  - Belt
+  - Ore
+  - Button
   layers:
   - Default
   - TransparentFX

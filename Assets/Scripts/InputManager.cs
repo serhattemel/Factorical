@@ -6,16 +6,17 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
-    public Text terrainText;
     private Buildings buildings;
     private CameraSettings moving;
     public Button secondButton;
     public Button thirdButton;
-    public Button rotationButton;
+    public Button rotationButton, roadButton;
+    public Dropdown dropdown;
     private Factory_1 _factory;
+    private Belt _belt;
     private GridCell _gridCell, cellMouseIsOver;
-    public Text a;
-    private float startTime, endTime,totalTime;
+    public Text factoryName, factoryLevel;
+    private float startTime, endTime, totalTime;
     [SerializeField] private LayerMask whatIsAGridLayer;
     List<RaycastResult> results;
 
@@ -31,7 +32,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             startTime = Time.time;
@@ -47,7 +48,6 @@ public class InputManager : MonoBehaviour
                     moving.Scrolling = false;
                     if (cellMouseIsOver != null)
                     {
-                        Debug.Log("kisa");
                         ClickOnGrid();
                     }
                     return;
@@ -55,56 +55,81 @@ public class InputManager : MonoBehaviour
                     return;
             }
         }
-        
-        
+
+
     }
-    IEnumerator ExampleCoroutine()
+    IEnumerator PlacingCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
         buildings.fallowPointer = false;
         buildings.firstButton.gameObject.SetActive(true);
+        roadButton.gameObject.SetActive(true);
         rotationButton.gameObject.SetActive(false);
     }
     private void ClickOnGrid()
     {
-        if (buildings.buildingMode == true&& results.Count==0)
+        if (moving.Scrolling == false)
         {
-            Vector2 pos = cellMouseIsOver.GetPosition();
-            _gridCell = GameObject.Find(pos.x + "," + pos.y).GetComponent<GridCell>();
-            string terrainName = _gridCell.transform.GetChild(0).name;
-            terrainText.text = terrainName;
-            if (_gridCell.objectInThisGridSpace == null && moving.Scrolling==false&&terrainName!="ice")
+            if (buildings.buildingMode == true && results.Count == 0)
             {
-                Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
-                StartCoroutine(ExampleCoroutine());
-
+                PlacingObject();
             }
-        }
-        else if(buildings.buildingMode == false)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitinfo, 100f))
+            else if (buildings.buildingMode == false)
             {
-                if (hitinfo.collider.tag == "Factory")
-                {
-                    secondButton.gameObject.SetActive(true);
-                    _factory = hitinfo.transform.GetComponent<Factory_1>();
-                    a.text = _factory.name;
-                    if (_factory.upgradeLevel < _factory.maxUpgradeLevel)
-                        thirdButton.gameObject.SetActive(true);
-                    else
-                        thirdButton.gameObject.SetActive(false);
-
-                }
-                else
-                {
-                    secondButton.gameObject.SetActive(false);
-                    thirdButton.gameObject.SetActive(false);
-                }
+                OnClickObject();
             }
+
         }
 
     }
+
+    private void PlacingObject()
+    {
+        Vector2 pos = cellMouseIsOver.GetPosition();
+        _gridCell = GameObject.Find(pos.x + "," + pos.y).GetComponent<GridCell>();
+        string terrainName = _gridCell.transform.GetChild(0).name;
+        string factoryname = buildings._buildingsList[buildings._buildingCount].name;
+        _factory = GameObject.Find(factoryname).GetComponent<Factory_1>();
+        if (_factory.FactoryType == "Extractor" && _gridCell.ObjectInThisGridSpace.name != "tree")
+        {
+            Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
+            StartCoroutine(PlacingCoroutine());
+        }
+        else if (_factory.FactoryType == "Wood Factory" && _gridCell.ObjectInThisGridSpace.name == "tree")
+        {
+            Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
+            StartCoroutine(PlacingCoroutine());
+        }
+        else if (_gridCell.ObjectInThisGridSpace == null /*&& terrainName != "ice"*/)
+        {
+            Debug.Log("Cell Pos:" + cellMouseIsOver.GetPosition());
+            StartCoroutine(PlacingCoroutine());
+
+        }
+    }
+
+    private void OnClickObject()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitinfo, 100f))
+        {
+            if (hitinfo.collider.tag != "Factory" && hitinfo.collider.tag != "Belt")
+            {
+                secondButton.gameObject.SetActive(false);
+                thirdButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                secondButton.gameObject.SetActive(true);
+                thirdButton.gameObject.SetActive(true);
+                _factory = hitinfo.transform.GetComponent<Factory_1>();
+                factoryName.text = _factory.FactoryType;
+                factoryLevel.text = _factory.upgradeLevel.ToString();
+
+            }
+        }
+    }
+
     public void DestroySelectedBuilding()
     {
         if (_factory)
@@ -119,7 +144,16 @@ public class InputManager : MonoBehaviour
                 _factory.Destroy();
                 secondButton.gameObject.SetActive(false);
             }
-        }   
+        }
+        else
+            Debug.Log("Fabrika seçin");
+    }
+    public void ChangeProccesorType()
+    {
+        if (_factory)
+        {
+            _factory.GetComponent<Proccesor>().ProccesorType = dropdown.value;
+        }
         else
             Debug.Log("Fabrika seçin");
     }
@@ -128,15 +162,26 @@ public class InputManager : MonoBehaviour
         if (_factory)
         {
             _factory.Upgrade();
-            if (_factory.upgradeLevel == 3)
-                thirdButton.gameObject.SetActive(false);
+            factoryName.text = _factory.FactoryType;
+            factoryLevel.text = _factory.upgradeLevel.ToString();
+
         }
         else
             Debug.Log("Fabrika seçin");
     }
+    public void MenuValues()
+    {
+        if (_factory.FactoryType != "Ore Factory")
+        {
+            dropdown.gameObject.SetActive(false);
+            return;
+        }
+        dropdown.gameObject.SetActive(true);
+        dropdown.value = _factory.GetComponent<Proccesor>().ProccesorType;
+    }
     public void RotateSelectedBuilding()
     {
-        string factoryname = "factory " + buildings._buildingCount;
+        string factoryname = buildings._buildingsList[buildings._buildingCount].name;
         _factory = GameObject.Find(factoryname).GetComponent<Factory_1>();
         if (_factory)
         {
@@ -153,7 +198,7 @@ public class InputManager : MonoBehaviour
         results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPos, results);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray,out RaycastHit hitInfo, 100f, whatIsAGridLayer))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, whatIsAGridLayer))
         {
             return hitInfo.transform.GetComponent<GridCell>();
         }

@@ -7,7 +7,10 @@ public class GridCell : MonoBehaviour
     private int posX;
     private int posY;
 
-    public GameObject objectInThisGridSpace = null;
+    [SerializeField] private GameObject objectInThisGridSpace = null;
+    private GameObject oreInThisGridSpace;
+    public GameObject ObjectInThisGridSpace { get => objectInThisGridSpace; set => objectInThisGridSpace = value; }
+    public GameObject OreInThisGridSpace { get => oreInThisGridSpace; set => oreInThisGridSpace = value; }
 
     public void SetPosition(int x, int y)
     {
